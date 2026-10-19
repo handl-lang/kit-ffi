@@ -1,0 +1,16 @@
+[package]
+name = "handl-plugin-ffi"
+version = "0.1.0"
+edition = "2024"
+description = "Generic FFI dispatcher for handl."
+license = "MIT OR Apache-2.0"
+repository.workspace = true
+
+[dependencies]
+handl-platform = { git = "https://github.com/handl-lang/host", branch = "main" }
+handl-value = { git = "https://github.com/handl-lang/kernel", branch = "main" }
+libloading = "0.8"
+serde_json = "1"
+cranelift = { version = "0.115", features = ["frontend", "native"] }
+cranelift-jit = "0.115"
+cranelift-module = "0.115"
