@@ -16,7 +16,7 @@ use handl_plugin_ffi::{FfiBind, FfiCall, FfiErrno, FfiLoad, FfiRead, FfiSym};
 // ffi — foreign-function interface package (`ffi.hnl` + native ops)
 // ---------------------------------------------------------------------------
 
-const FFI_HNL: &str = include_str!("../../../../lib-ffi/src/ffi.hnl");
+const FFI_HNL: &str = handl_lib_ffi::FFI_HNL;
 const FFI_FUNCS: &[&str] = &[
     "Errno", "Handle", "call", "bind", "errno", "load", "read", "sym",
 ];
