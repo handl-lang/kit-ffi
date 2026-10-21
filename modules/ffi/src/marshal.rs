@@ -13,6 +13,7 @@
 //! | `"u8"`-`"u64"` | `uint8_t`..`uint64_t`   | number (range-checked) |
 //! | `"f64"`        | `double` (value)        | number               |
 //! | `"cstr"`       | `const char *`          | string (NUL-checked) |
+//! | `"strv"`       | `char *const *`         | list of strings/Bytes |
 //! | `"ptr"`        | `void *`                | number (address)     |
 //! | `"handle"`     | `void *`                | `{"__resource__": {"ptr": N}}` (opaque handle, ADR-0083 §2.2) |
 //! | `"void"`       | `void` (return)         | — (returns null)     |
@@ -50,6 +51,13 @@
 //! POSIX value-result pattern (`sockaddr * + socklen_t *` in `accept`,
 //! `getsockname`, `recvfrom`); the slot is trimmed to the length the
 //! callee wrote back.
+//!
+//! `strv` consumes **one** handl argument — a list of strings (a `Bytes`
+//! element is also accepted, for byte-exact argv entries) — and expands
+//! to **one** C argument: a `char *const *`, a NULL-terminated array of
+//! pointers to NUL-terminated C strings (the `argv`/`envp` shape of
+//! `posix_spawnp`, `execv*`). An empty list yields the bare `{NULL}`
+//! array.
 //!
 //! The return becomes `{ ret, buf, outs }`: `buf` is the first out-slot
 //! (kept for the common single-out case) and `outs` lists every out-slot
@@ -287,10 +295,14 @@ impl ScalarSlot {
 /// any `out_buf:N` slots so the return can be wrapped as `{ ret, buf }`.
 pub(crate) struct MarshalResult {
     pub c_args: Vec<CArg>,
-    /// `CString`s owned by the marshaller (for `cstr` args).
+    /// `CString`s owned by the marshaller (for `cstr` args, and the
+    /// elements `strv` pointer arrays refer to).
     pub keep_alive: Vec<CString>,
     /// Source `Vec<u8>`s for `in_buf` / `cbytes` args (C reads from these).
     pub byte_keep_alive: Vec<Vec<u8>>,
+    /// The NULL-terminated `char *const *` arrays built for `strv` args;
+    /// their elements point into `keep_alive`.
+    pub strv_keep_alive: Vec<Vec<*const c_char>>,
     /// Allocated output buffers for `out_buf:N` / `out_ptr:N` / `io_buf:N`.
     pub out_slots: Vec<OutSlot>,
     /// Allocated scalar cells for `io_scalar:TYPE` descriptors.
@@ -360,6 +372,7 @@ pub(crate) fn marshal_call_args(
         c_args: Vec::with_capacity(descriptors.len() * 2),
         keep_alive: Vec::with_capacity(descriptors.len()),
         byte_keep_alive: Vec::with_capacity(descriptors.len()),
+        strv_keep_alive: Vec::new(),
         out_slots: Vec::new(),
         scalar_outs: Vec::new(),
         struct_args: Vec::new(),
@@ -388,6 +401,13 @@ pub(crate) fn marshal_call_args(
             let bytes = json_to_bytes(value)?;
             let ptr = bytes.as_ptr() as i64;
             res.byte_keep_alive.push(bytes);
+            res.c_args.push(CArg::Int(ptr));
+        } else if desc == "strv" {
+            let value = args.get(arg_idx).ok_or_else(|| {
+                EvalError::TypeMismatch("missing argument for strv".to_string())
+            })?;
+            arg_idx += 1;
+            let ptr = marshal_strv(value, &mut res)?;
             res.c_args.push(CArg::Int(ptr));
         } else if let Some(n_str) = desc.strip_prefix("out_buf:") {
             let n = parse_size("out_buf", n_str)?;
@@ -494,6 +514,47 @@ fn parse_size(kind: &str, n_str: &str) -> Result<usize, EvalError> {
     n_str
         .parse()
         .map_err(|_| EvalError::TypeMismatch(format!("invalid {kind} size: {n_str:?}")))
+}
+
+/// Marshal a `strv` argument into `res`, returning the array pointer.
+///
+/// Builds one `CString` per list element (kept in `res.keep_alive`), then
+/// a `char *const *` array of their pointers with a trailing NULL (kept
+/// in `res.strv_keep_alive`) — the NULL-terminated `argv`/`envp` shape.
+/// An empty list marshals to the bare `{NULL}` array, a valid
+/// `char *[]{NULL}`. Elements are strings; a `Bytes` value
+/// (`{__bytes__: [...]}` or a plain number array) is also accepted for
+/// byte-exact, non-UTF-8 argv entries. Embedded NULs are an error, same
+/// as `cstr`.
+fn marshal_strv(value: &JsonValue, res: &mut MarshalResult) -> Result<i64, EvalError> {
+    let arr = value.as_array().ok_or_else(|| {
+        EvalError::TypeMismatch("expected list of strings for strv".to_string())
+    })?;
+    let base = res.keep_alive.len();
+    for (i, el) in arr.iter().enumerate() {
+        let bytes = if let Some(s) = el.as_str() {
+            s.as_bytes().to_vec()
+        } else {
+            json_to_bytes(el).map_err(|_| {
+                EvalError::TypeMismatch(format!("strv[{i}] must be a string or Bytes"))
+            })?
+        };
+        let c = CString::new(bytes).map_err(|_| {
+            EvalError::TypeMismatch(format!("embedded NUL byte in strv[{i}]"))
+        })?;
+        res.keep_alive.push(c);
+    }
+    // Snapshot the pointers only after every CString is pushed: pushing
+    // moves the CString boxes into the Vec but not their heap buffers, so
+    // these `as_ptr()` addresses stay valid for the duration of the call.
+    let mut ptrs: Vec<*const c_char> = res.keep_alive[base..]
+        .iter()
+        .map(|c| c.as_ptr())
+        .collect();
+    ptrs.push(std::ptr::null());
+    let ptr = ptrs.as_ptr() as i64;
+    res.strv_keep_alive.push(ptrs);
+    Ok(ptr)
 }
 
 /// Read an out-slot back as a `Bytes` JSON value, trimmed per its kind.

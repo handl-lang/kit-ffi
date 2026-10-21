@@ -1380,3 +1380,135 @@ fn in_ptr_bytes_content() {
     let bytes: Vec<u8> = unsafe { std::slice::from_raw_parts(ptr, 6).to_vec() };
     assert_eq!(bytes, vec![97, 0, 46, 0, 98, 0]);
 }
+
+// -------------------------------------------------------------------------
+// strv — NULL-terminated `char *const *` string vector
+// -------------------------------------------------------------------------
+
+/// Read the marshalled `strv` array at `c_args[0]` as a slice of string
+/// pointers; asserts the slot is a non-null `CArg::Int`.
+fn strv_array(res: &crate::marshal::MarshalResult) -> *const *const std::ffi::c_char {
+    match res.c_args[0] {
+        CArg::Int(p) => {
+            assert_ne!(p, 0, "strv array pointer must not be null");
+            p as *const *const std::ffi::c_char
+        }
+        other => panic!("expected Int pointer for strv, got {other:?}"),
+    }
+}
+
+#[test]
+fn marshal_strv_builds_null_terminated_array() {
+    let res = marshal_call_args(&["strv".to_string()], &[json!(["ls", "-l", "/tmp"])])
+        .expect("strv marshal should succeed");
+    assert_eq!(res.c_args.len(), 1, "strv expands to a single C arg");
+    assert_eq!(res.keep_alive.len(), 3, "one CString per element");
+    assert_eq!(res.strv_keep_alive.len(), 1, "one pointer array");
+
+    // SAFETY: `res` owns the CStrings and the pointer array, so every
+    // element up to the trailing NULL is a valid NUL-terminated string.
+    let arr = strv_array(&res);
+    unsafe {
+        for (i, want) in ["ls", "-l", "/tmp"].iter().enumerate() {
+            let p = *arr.add(i);
+            assert!(!p.is_null(), "strv[{i}] must not be null");
+            assert_eq!(std::ffi::CStr::from_ptr(p).to_str().unwrap(), *want);
+        }
+        assert!(
+            (*arr.add(3)).is_null(),
+            "strv array must be NULL-terminated"
+        );
+    }
+}
+
+#[test]
+fn marshal_strv_empty_list_is_bare_null() {
+    let res = marshal_call_args(&["strv".to_string()], &[json!([])]).expect("empty strv");
+    let arr = strv_array(&res);
+    // SAFETY: the array has exactly one slot — the NULL terminator.
+    unsafe { assert!((*arr).is_null(), "empty strv marshals to {{NULL}}") };
+    assert!(res.keep_alive.is_empty());
+}
+
+#[test]
+fn marshal_strv_accepts_bytes_elements() {
+    // A `Bytes` element is accepted for byte-exact argv entries.
+    let res = marshal_call_args(
+        &["strv".to_string()],
+        &[json!(["run", {"__bytes__": [0x68, 0x69]}])],
+    )
+    .expect("strv with Bytes element should succeed");
+    let arr = strv_array(&res);
+    unsafe {
+        assert_eq!(
+            std::ffi::CStr::from_ptr(*arr.add(1)).to_str().unwrap(),
+            "hi"
+        );
+        assert!((*arr.add(2)).is_null());
+    }
+}
+
+#[test]
+fn marshal_strv_rejects_bad_elements() {
+    // Non-list arg.
+    let res = marshal_call_args(&["strv".to_string()], &[json!("nope")]);
+    assert!(matches!(res, Err(EvalError::TypeMismatch(_))));
+    // A number is neither a string nor Bytes.
+    let res = marshal_call_args(&["strv".to_string()], &[json!(["ok", 5])]);
+    assert!(matches!(res, Err(EvalError::TypeMismatch(_))));
+    // Embedded NUL in a string element — same rule as `cstr`.
+    let res = marshal_call_args(&["strv".to_string()], &[json!(["a\0b"])]);
+    assert!(matches!(res, Err(EvalError::TypeMismatch(_))));
+}
+
+#[test]
+fn strv_posix_spawnp_runs_true() {
+    // posix_spawnp(&pid, path, NULL, NULL, argv, envp): argv is a
+    // `char *const []` marshalled via `strv`; envp is a NULL `ptr`
+    // (inherit environ). The pid out-param is `out_ptr:4` (pid_t = i32).
+    let path = ["/bin/true", "/usr/bin/true"]
+        .iter()
+        .find(|p| std::path::Path::new(p).exists())
+        .copied()
+        .expect("no /bin/true or /usr/bin/true on this system");
+    let spawn = FfiOpFunction::new(
+        "libc.so.6",
+        "posix_spawnp",
+        vec![
+            "out_ptr:4".to_string(),
+            "cstr".to_string(),
+            "ptr".to_string(),
+            "ptr".to_string(),
+            "strv".to_string(),
+            "ptr".to_string(),
+        ],
+        "i32",
+        false, // posix_spawnp returns the error code, not -1/errno
+    );
+    let result = call(
+        &spawn,
+        &[json!(path), json!(0), json!(0), json!(["true"]), json!(0)],
+    )
+    .expect("posix_spawnp call should succeed");
+    assert_eq!(
+        result.get("ret").and_then(|v| v.as_i64()),
+        Some(0),
+        "posix_spawnp should return 0"
+    );
+    let outs = outs_bytes(&result);
+    let pid = i32::from_ne_bytes(outs[0][..4].try_into().unwrap());
+    assert!(pid > 0, "spawned pid should be positive, got {pid}");
+
+    // Reap the child: waitpid(pid, &status, 0) and verify exit code 0.
+    let waitpid = FfiOpFunction::new(
+        "libc.so.6",
+        "waitpid",
+        vec!["i32".to_string(), "out_ptr:4".to_string(), "i32".to_string()],
+        "i32",
+        true,
+    );
+    let w = call(&waitpid, &[json!(pid), json!(0)]).expect("waitpid should succeed");
+    assert_eq!(w.get("ret").and_then(|v| v.as_i64()), Some(pid as i64));
+    let status = i32::from_ne_bytes(outs_bytes(&w)[0][..4].try_into().unwrap());
+    assert_eq!(status, 0, "/bin/true should exit 0, status {status:#x}");
+}

@@ -52,8 +52,9 @@ use crate::marshal::{CArg, CRet, CRetKind};
 /// The machine-level class of one marshalled C argument.
 ///
 /// Only the class matters for code generation: `Int` covers every
-/// integer/pointer descriptor (`i32`, `i64`, `ptr`, `cstr`, `handle`, and
-/// both halves of the buffer-descriptor `(ptr, len)` pairs); `Float`
+/// integer/pointer descriptor (`i32`, `i64`, `ptr`, `cstr`, `strv`,
+/// `handle`, and both halves of the buffer-descriptor `(ptr, len)`
+/// pairs); `Float`
 /// covers `f64`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub(crate) enum ArgClass {

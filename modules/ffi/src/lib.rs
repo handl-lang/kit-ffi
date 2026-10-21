@@ -27,6 +27,7 @@
 //! | `"i64"`    | `int64_t` (value) | number              |
 //! | `"f64"`    | `double` (value)  | number              |
 //! | `"cstr"`   | `const char *`    | string (NUL-checked)|
+//! | `"strv"`   | `char *const *`   | list of strings/Bytes (NULL-terminated array) |
 //! | `"ptr"`    | `void *`          | number (address)    |
 //! | `"handle"` | `void *`          | `{"__resource__": {"ptr": N}}` (opaque handle, ADR-0083 §2.2) |
 //! | `"void"`   | `void` (return)   | — (returns null)    |
