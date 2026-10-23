@@ -344,6 +344,7 @@ dependencies = [
  "handl-plugin-lib-handl",
  "handl-plugin-lib-stdlib",
  "handl-plugin-module",
+ "handl-value",
  "serde_json",
 ]
 
@@ -1040,6 +1041,7 @@ name = "hnl-engine-transform-rewrite"
 version = "0.1.0"
 dependencies = [
  "handl-language",
+ "handl-value",
  "hnl-engine-transform",
  "serde_json",
 ]
@@ -1992,7 +1994,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[patch.unused]]
-name = "handl-lib-perlin"
+name = "handl-plugin-lib-lang-typecheck"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-kit-data"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2000,7 +2006,35 @@ name = "handl-plugin-lib-kv-hashmap"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "hnl-engine-typecheck-handl"
+name = "handl-plugin-lib-lang-compile"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-eval"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-lex"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-parse"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-run-compiled"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-typecheck"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-tag"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-test-utils"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2008,11 +2042,27 @@ name = "handl-lib-tag"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-lib-test"
+name = "handl-lib-rand-stub"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-eval"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv-hashmap"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv"
 version = "0.1.0"
 
 [[patch.unused]]
 name = "handl-plugin-lib-lang-run-compiled"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-parse"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2060,15 +2110,23 @@ name = "handl-plugin-lib-lang-lex"
 version = "0.1.0"
 
 [[patch.unused]]
+name = "handl-lib-perlin"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-lib-test"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "handl-lib-dedent"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-plugin-lib-kv"
+name = "hnl-engine-exec-cranelift"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-plugin-lib-lang-parse"
+name = "handl-kit-data-prelude"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2116,73 +2174,17 @@ name = "sepia-testkit"
 version = "0.0.0"
 
 [[patch.unused]]
+name = "hnl-engine-typecheck-nbe"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-compile"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "handl-lib-simplex"
 version = "0.1.0"
 
 [[patch.unused]]
 name = "handl-lib-comb"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "hnl-engine-exec-cranelift"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-kit-data-prelude"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-kit-data"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-kv-hashmap"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-compile"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-eval"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-lex"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-parse"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-run-compiled"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-typecheck"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-tag"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-test-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-rand-stub"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-typecheck"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-compile"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-eval"
 version = "0.1.0"
