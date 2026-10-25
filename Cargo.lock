@@ -55,9 +55,9 @@ dependencies = [
 
 [[package]]
 name = "cc"
-version = "1.8.0"
+version = "1.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6651c9ed80effdc7db0ff72512157f901af5e3549e341e24b1dd4887d836d838"
+checksum = "86e055fa6e3e40ad6187ba25b6855eeb635d5271f8e0f0e1e9a5826b8d75bea0"
 dependencies = [
  "find-msvc-tools",
  "shlex",
@@ -215,9 +215,9 @@ dependencies = [
 
 [[package]]
 name = "crc32fast"
-version = "1.5.2"
+version = "1.5.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "01a7799fd6b852db0e61728dde9a204c423b44d689dbd432522543614b490e78"
+checksum = "0ba106e844045ddc02c20768ac4b0b7cb45f2cc2ecbd833ac9f5dacb183c2055"
 dependencies = [
  "cfg-if",
 ]
@@ -267,9 +267,9 @@ dependencies = [
 
 [[package]]
 name = "find-msvc-tools"
-version = "0.1.14"
+version = "0.1.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "aedcfb3409746eddb02b9e19ebda1c3394f759a152e48ee875a0844d1b955484"
+checksum = "1c66915cc5391097de7a2b0b972e8505aa33c0df401fd3a6811dbdb32881ba48"
 
 [[package]]
 name = "flate2"
@@ -364,7 +364,9 @@ dependencies = [
 name = "handl-language"
 version = "0.1.0"
 dependencies = [
+ "handl-value",
  "hnl-engine",
+ "rustc-hash",
  "serde",
  "serde_json",
  "thiserror",
@@ -652,6 +654,7 @@ version = "0.1.0"
 name = "handl-platform"
 version = "0.1.0"
 dependencies = [
+ "handl-value",
  "semver",
  "serde",
  "serde_json",
@@ -673,7 +676,7 @@ dependencies = [
 [[package]]
 name = "handl-plugin-ext-fmt"
 version = "0.1.0"
-source = "git+https://github.com/handl-lang/host?branch=main#b6f273961ea1aa9eacf540b19ad18f6a309b7f94"
+source = "git+https://github.com/handl-lang/host?branch=main#7ebe493efc76d55249adbb13ff5632f10f1f3904"
 dependencies = [
  "handl-language",
  "handl-platform",
@@ -688,7 +691,7 @@ dependencies = [
 [[package]]
 name = "handl-plugin-ext-lint"
 version = "0.1.0"
-source = "git+https://github.com/handl-lang/host?branch=main#b6f273961ea1aa9eacf540b19ad18f6a309b7f94"
+source = "git+https://github.com/handl-lang/host?branch=main#7ebe493efc76d55249adbb13ff5632f10f1f3904"
 dependencies = [
  "handl-language",
  "handl-platform",
@@ -973,7 +976,7 @@ dependencies = [
 [[package]]
 name = "hnl-engine-fmt"
 version = "0.1.0"
-source = "git+https://github.com/handl-lang/engine-fmt?branch=main#7585b3a11205fc39635bbdda6a998c2094e90a3a"
+source = "git+https://github.com/handl-lang/engine-fmt?branch=main#56bff6ecbb2476877bc2608d215f6dda83cddc54"
 dependencies = [
  "handl-language",
  "serde_json",
@@ -982,7 +985,7 @@ dependencies = [
 [[package]]
 name = "hnl-engine-lex"
 version = "0.1.0"
-source = "git+https://github.com/handl-lang/engine-lex?branch=main#3af64c9e139d841679b302132ef421b3a8503518"
+source = "git+https://github.com/handl-lang/engine-lex?branch=main#487a5441ebf76696c51e0fdeac3607d515f0e7ca"
 dependencies = [
  "handl-language",
  "serde_json",
@@ -999,7 +1002,7 @@ dependencies = [
 [[package]]
 name = "hnl-engine-lint"
 version = "0.1.0"
-source = "git+https://github.com/handl-lang/engine-lint?branch=main#e646a5b6fb12a5b625c1d6ac0023907069bf8d0d"
+source = "git+https://github.com/handl-lang/engine-lint?branch=main#b634478d628d3f43a80dc8cf2aa9b4333d461314"
 dependencies = [
  "handl-language",
  "handl-plugin-ext-diag",
@@ -1061,9 +1064,9 @@ dependencies = [
 
 [[package]]
 name = "icu_collections"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fa68d21081c4a05d5a901a1c62add574c77048b6a1c67be3b50ce0b60d4ca513"
+checksum = "fe090a42a0d3140fed8c63263ed1fecc02422cb2f4bfe55cd8de2de1b8e105dd"
 dependencies = [
  "displaydoc",
  "potential_utf",
@@ -1075,9 +1078,9 @@ dependencies = [
 
 [[package]]
 name = "icu_locale_core"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d56e28588da92eee5c3201a6eff33fabdd49b62269c8938d4ff050ce4d900deb"
+checksum = "25d29b57c17c6528d0dc4c2141cfa2d08200465acb537a3909c8b9b8a4a984c0"
 dependencies = [
  "displaydoc",
  "litemap",
@@ -1088,9 +1091,9 @@ dependencies = [
 
 [[package]]
 name = "icu_normalizer"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "12f9cf5f235641ed274641dd81c3f28d870e276763d0797aeeab72317b1c646f"
+checksum = "404a3b8c486f205c87fe7f23ab6894d84a4ad76d6e4671ae1981ba7def87c599"
 dependencies = [
  "icu_collections",
  "icu_normalizer_data",
@@ -1102,15 +1105,15 @@ dependencies = [
 
 [[package]]
 name = "icu_normalizer_data"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1563da1ed3e0b3bf3d74c9b85917ac9c56464d2f57242270c09c9e752f8021a0"
+checksum = "20f0088bfb7441f7a37fa0c9e20cb1e9cba1cac6b9ce8cd2a6dc44294f8e8cbc"
 
 [[package]]
 name = "icu_properties"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7e7ca276ad3145661a65914e6daf131ca5120cd3dcee8f8f3214b8875184a148"
+checksum = "2ea83d991c56158f7cf898bf86436c1dfe7c07ee82fe88951f2695c9f37a379f"
 dependencies = [
  "displaydoc",
  "icu_collections",
@@ -1123,15 +1126,15 @@ dependencies = [
 
 [[package]]
 name = "icu_properties_data"
-version = "2.3.0"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e590f038c1464a96894fd6d10127e90a8be4509f56ff7ecef851b15cee0b7caa"
+checksum = "b98f29af82d02b163fe50161388350e743bb3107cc8e8c2f7314cb505faddfcf"
 
 [[package]]
 name = "icu_provider"
-version = "2.3.1"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d27bbb9d3abbefac45d55f647c9de1d44aafcd1186eb91879afef17c396c3e73"
+checksum = "413099315636c588ee8f011190b329b971a09a8fae9d157e01dcae8379468514"
 dependencies = [
  "displaydoc",
  "icu_locale_core",
@@ -1416,9 +1419,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.103.15"
+version = "0.103.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f3c3cf1d8b1e7d4927e2d154c3fcb02979afb9939629c62cd9048d4f07b60ac2"
+checksum = "4443b1b6d39d7c663139942cc4558262562d2c84123bb6282ef177009ca8b281"
 dependencies = [
  "ring",
  "rustls-pki-types",
@@ -1516,9 +1519,9 @@ checksum = "3a219298ac11a56ea9a6d2120044824d6f01aeb034955e7af7bc16858527deea"
 
 [[package]]
 name = "smallvec"
-version = "1.16.3"
+version = "1.16.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "5b3dc8af474f516a851ff4bd12db780f948b9250ad37211e4eec0bccea54e01b"
+checksum = "d0d5d4b1981b8bbbb7aed204cae5726d683d5d6ac7e74ec54122ea28f315e7c8"
 
 [[package]]
 name = "stable_deref_trait"
@@ -1604,9 +1607,9 @@ dependencies = [
 
 [[package]]
 name = "tinystr"
-version = "0.8.4"
+version = "0.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1e27c91459209c2986af3dcf603a5a74a4368754ce37414f59acc971167f643"
+checksum = "abc840c238154d58f9e86b2792261edfde565a17696e1cda1a449de27979801a"
 dependencies = [
  "displaydoc",
  "zerovec",
@@ -1738,14 +1741,14 @@ version = "0.26.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "521bc38abb08001b01866da9f51eb7c5d647a19260e00054a8c7fd5f9e57f7a9"
 dependencies = [
- "webpki-roots 1.0.9",
+ "webpki-roots 1.0.11",
 ]
 
 [[package]]
 name = "webpki-roots"
-version = "1.0.9"
+version = "1.0.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7dcd9d09a39985f5344844e66b0c530a33843579125f23e21e9f0f220850f22a"
+checksum = "f5f280bbb2b287bc8e7de7e3852945a0ff50d1bbcb5ed42b6c7a568c546df171"
 dependencies = [
  "rustls-pki-types",
 ]
@@ -1880,9 +1883,9 @@ dependencies = [
 
 [[package]]
 name = "yoke"
-version = "0.8.3"
+version = "0.8.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "709fe23a0424b6a435d82152b1bd3fdfb0833487d5fa90d05d42762a9891fef5"
+checksum = "417ef3fcf6c300b7dbd25c85531a746931c02ad536f3cf4786ed1e88223340b3"
 dependencies = [
  "stable_deref_trait",
  "yoke-derive",
@@ -1961,9 +1964,9 @@ dependencies = [
 
 [[package]]
 name = "zerovec"
-version = "0.11.8"
+version = "0.11.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bb0464e17806c1d976d5cba29399c7f08e516e279e2ba493f63123b5fca67dd8"
+checksum = "f58a2799cfe9a1670c7ea8edbd52ef8edb93cb37a7f83bf31ba9e35d9dae6a40"
 dependencies = [
  "yoke",
  "zerofrom",
@@ -1972,9 +1975,9 @@ dependencies = [
 
 [[package]]
 name = "zerovec-derive"
-version = "0.11.6"
+version = "0.11.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "34df6fc39dbd26ddc9c10e6a2984476e13acce22e64e4487636ef494369225da"
+checksum = "c3743ddbf47738d929cd1ae2e199d40d0162979dfe31aef8ae646d2bf00bf97a"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -1994,27 +1997,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "29666d0abbfad1e3dc4dcf6144730dd3a3ab225bbbdac83319345b1b44ccfc1b"
 
 [[patch.unused]]
-name = "handl-plugin-lib-lang-typecheck"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-kit-data"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-kv-hashmap"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-compile"
-version = "0.1.0"
-
-[[patch.unused]]
 name = "handl-plugin-lib-lang-eval"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-lex"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2026,99 +2009,7 @@ name = "handl-plugin-lib-lang-run-compiled"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-plugin-lib-lang-typecheck"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-tag"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-test-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-tag"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-rand-stub"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-eval"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-kv-hashmap"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-kv"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-run-compiled"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-parse"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-kit-data"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-kv-hashmap"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-compile"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-eval"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-lex"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-parse"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-run-compiled"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-typecheck"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-tag"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-test-utils"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-plugin-lib-lang-lex"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-perlin"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-test"
-version = "0.1.0"
-
-[[patch.unused]]
-name = "handl-lib-dedent"
+name = "handl-lib-comb"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2126,7 +2017,11 @@ name = "hnl-engine-exec-cranelift"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-kit-data-prelude"
+name = "handl-lib-perlin"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-lib-tag"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2174,7 +2069,27 @@ name = "sepia-testkit"
 version = "0.0.0"
 
 [[patch.unused]]
-name = "hnl-engine-typecheck-nbe"
+name = "handl-lib-test"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-typecheck"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-lex"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-kit-data"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv-hashmap"
 version = "0.1.0"
 
 [[patch.unused]]
@@ -2182,9 +2097,97 @@ name = "handl-plugin-lib-lang-compile"
 version = "0.1.0"
 
 [[patch.unused]]
+name = "handl-plugin-lib-lang-eval"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-lex"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-parse"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-run-compiled"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-typecheck"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-tag"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-test-utils"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv-hashmap"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-kit-data"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-kv-hashmap"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-compile"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-eval"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-lex"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-parse"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-run-compiled"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-typecheck"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-tag"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-test-utils"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-lib-dedent"
+version = "0.1.0"
+
+[[patch.unused]]
 name = "handl-lib-simplex"
 version = "0.1.0"
 
 [[patch.unused]]
-name = "handl-lib-comb"
+name = "handl-lib-rand-stub"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-kit-data-prelude"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "hnl-engine-typecheck-nbe"
+version = "0.1.0"
+
+[[patch.unused]]
+name = "handl-plugin-lib-lang-compile"
 version = "0.1.0"
