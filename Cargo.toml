@@ -139,8 +139,6 @@ handl-plugin-lib-crypto = { path = "../lib-crypto" }
 [patch."https://github.com/handl-lang/lib-desugar"]
 handl-lib-desugar = { path = "../lib-desugar" }
 
-[patch."https://github.com/handl-lang/lib-encoding"]
-handl-lib-encoding = { path = "../lib-encoding" }
 
 [patch."https://github.com/handl-lang/lib-hello"]
 handl-lib-hello = { path = "../lib-hello" }
@@ -150,8 +148,6 @@ handl-lib-hello = { path = "../lib-hello" }
 handl-lib-loader = { path = "../lib-loader" }
 
 
-[patch."https://github.com/handl-lang/lib-parse"]
-handl-lib-parse = { path = "../lib-parse" }
 
 
 
