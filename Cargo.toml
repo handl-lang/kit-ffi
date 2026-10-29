@@ -78,8 +78,6 @@ handl-lib-type = { path = "../kernel/crates/type" }
 
 # Match platform's dev profile: unoptimized (opt-level=0) builds overflow the
 # default test-thread stack in the recursive tree-walk eval.
-[patch."https://github.com/handl-lang/lib-otlp"]
-handl-lib-otlp = { path = "../lib-otlp" }
 
 [patch."https://github.com/handl-lang/lib-otlp-c"]
 handl-plugin-lib-otlp-c = { path = "../lib-otlp-c" }
@@ -108,32 +106,18 @@ handl-plugin-module = { path = "../host/crates/plugin-module" }
 handl-runtime = { path = "../host/crates/handl-runtime" }
 
 
-[patch."https://github.com/handl-lang/lib-json"]
-handl-lib-json = { path = "../lib-json" }
 
-[patch."https://github.com/handl-lang/lib-base64"]
-handl-lib-base64 = { path = "../lib-base64" }
 
-[patch."https://github.com/handl-lang/lib-hex"]
-handl-lib-hex = { path = "../lib-hex" }
 
 [patch."https://github.com/handl-lang/lib-ip"]
 handl-lib-ip = { path = "../lib-ip" }
 
-[patch."https://github.com/handl-lang/lib-url-rfc"]
-handl-lib-url-rfc = { path = "../lib-url-rfc" }
 
-[patch."https://github.com/handl-lang/lib-url-whatwg"]
-handl-lib-url-whatwg = { path = "../lib-url-whatwg" }
 
-[patch."https://github.com/handl-lang/lib-tar"]
-handl-lib-tar = { path = "../lib-tar" }
 
 [patch."https://github.com/handl-lang/lib-serialize"]
 handl-lib-serialize = { path = "../lib-serialize" }
 
-[patch."https://github.com/handl-lang/lib-kv-map"]
-handl-lib-kv-map = { path = "../lib-kv-map" }
 
 [patch."https://github.com/handl-lang/lib-ffi"]
 handl-lib-ffi = { path = "../lib-ffi" }
