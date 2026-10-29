@@ -140,8 +140,6 @@ handl-lib-kv-map = { path = "../lib-kv-map" }
 [patch."https://github.com/handl-lang/lib-ffi"]
 handl-lib-ffi = { path = "../lib-ffi" }
 
-[patch."https://github.com/handl-lang/lib-type-handl"]
-handl-lib-type-handl = { path = "../lib-type-handl" }
 
 [patch."https://github.com/handl-lang/lib-archive"]
 handl-lib-archive = { path = "../lib-archive" }
