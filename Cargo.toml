@@ -195,8 +195,6 @@ handl-plugin-lib-serialize-toml-c = { path = "../lib-serialize-toml-c" }
 [patch."https://github.com/handl-lang/lib-serialize-yaml-c"]
 handl-plugin-lib-serialize-yaml-c = { path = "../lib-serialize-yaml-c" }
 
-[patch."https://github.com/handl-lang/lib-stats"]
-handl-lib-stats = { path = "../lib-stats" }
 
 [patch."https://github.com/handl-lang/lib-str-handl"]
 handl-lib-str-handl = { path = "../lib-str-handl" }
