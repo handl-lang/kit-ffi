@@ -1,0 +1,19 @@
+# bupha.toml — committed CI manifest for handl-lang/kit-ffi.
+#
+# Runner is this repo's ci.sh (cargo check --workspace --all-targets +
+# cargo test --workspace --no-fail-fast). Merge the [[repos]] entry into
+# the shared watcher (~/.config/bupha/bupha.toml) or run:
+# bupha watch --config bupha.toml
+
+[[repos]]
+name = "handl-lang/kit-ffi"
+dir = "/home/luis/GitHub/handl-lang/kit-ffi"
+branch = "refs/heads/main"
+  [repos.runner]
+  kind = "script"
+  cmd = "bash ci.sh"
+  cancel_running = true
+
+[status]
+kind = "github"
+context = "ci/bupha"
